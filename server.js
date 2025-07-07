@@ -15,6 +15,9 @@ const machineRoutes = require('./routes/machineRoutes');
 const lineRoutes = require('./routes/lineRoutes');
 const processRoutes = require('./routes/processRoutes');
 const setupRoutes = require('./routes/setupRoutes');
+const shiftRoutes = require("./routes/shiftRoutes")
+const pmcparameterRoutes = require("./routes/pmcParameterRoutes")
+const documentRoutes = require("./routes/documentRoutes")
 
 
 app.use('/api/setups', setupRoutes);
@@ -22,6 +25,9 @@ app.use('/api/machines', machineRoutes);
 app.use('/api/parts', partRoutes);
 app.use('/api/lines', lineRoutes);
 app.use('/api/processes', processRoutes);
+app.use('/api/shifts', shiftRoutes)
+app.use('/api/pmc-parameters', pmcparameterRoutes);
+app.use('/api/documents', documentRoutes);
 
 const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
