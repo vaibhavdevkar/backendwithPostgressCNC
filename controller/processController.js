@@ -483,3 +483,28 @@ exports.deleteProcess = async (req, res) => {
     res.status(500).json({ message: 'Database error.' });
   }
 };
+
+
+// controllers/processController.js
+exports.getProcessesWithMachine = async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT 
+         pm.*,
+         mm.machine_id       AS machine_id,
+         mm.machine_name_type,
+         p.part_id           AS part_id,
+         COALESCE(p.part_name, p.part_name_code) AS part_name
+       FROM process_master pm
+       JOIN machine_master mm
+         ON pm.machine_id = mm.machine_id
+       JOIN part_master p
+         ON pm.part_id = p.part_id
+       ORDER BY pm.process_id;`
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching joined processes:', err);
+    res.status(500).json({ message: 'Database error.' });
+  }
+};

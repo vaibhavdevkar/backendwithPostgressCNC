@@ -18,6 +18,8 @@ const setupRoutes = require('./routes/setupRoutes');
 const shiftRoutes = require("./routes/shiftRoutes")
 const pmcparameterRoutes = require("./routes/pmcParameterRoutes")
 const documentRoutes = require("./routes/documentRoutes")
+const skillMatrixRoutes = require("./routes/skillMatrixRoutes")
+const userRoutes = require("./routes/userRoutes")
 
 
 app.use('/api/setups', setupRoutes);
@@ -28,6 +30,9 @@ app.use('/api/processes', processRoutes);
 app.use('/api/shifts', shiftRoutes)
 app.use('/api/pmc-parameters', pmcparameterRoutes);
 app.use('/api/documents', documentRoutes);
+app.use('/api/skills', skillMatrixRoutes);
+app.use('/api/users', userRoutes);
+
 
 const PORT = process.env.PORT || 5003;
 app.listen(PORT, () => {
