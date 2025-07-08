@@ -173,9 +173,11 @@
 // controllers/shiftController.js
 const pool = require('../db');
 
-// helper: convert "HH:MM:SS" → seconds since midnight
+// helper: convert "HH:MM" or "HH:MM:SS" → seconds since midnight
 function toSeconds(t) {
-  const [h, m, s] = t.split(':').map(Number);
+  // split into parts, map to Number
+  const parts = t.split(':').map(str => Number(str));
+  const [h, m, s = 0] = parts;  // default seconds to 0 if missing
   return h * 3600 + m * 60 + s;
 }
 
@@ -206,7 +208,7 @@ exports.createShift = async (req, res) => {
   let   diff     = endSec - startSec;
   let   isNight  = false;
   if (diff <= 0) {
-    diff    += 24 * 3600;
+    diff    += 24 * 3600;  // spans midnight
     isNight = true;
   }
   const shift_duration_mins = Math.round(diff / 60);
