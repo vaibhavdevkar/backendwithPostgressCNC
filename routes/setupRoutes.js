@@ -2,10 +2,15 @@ const express = require('express');
 const router  = express.Router();
 const ctrl    = require('../controller/setupController');
 
-router.post('/setups',     ctrl.createSetup);
-router.get('/setups',     ctrl.getAllSetups);
-router.get('/setups/:id', ctrl.getSetupById);
-router.put('/setups/:id', ctrl.updateSetup);
-router.delete('/setups/:id', ctrl.deleteSetup);
+// router.get(
+//   '/parameters',
+//   ctrl.getParametersByPartAndMachine
+// );
+
+router.post('/',     ctrl.createSetup);
+router.get('/',     ctrl.getAllSetups);
+router.get('/:id', ctrl.getSetupById);
+router.put('/:id', ctrl.updateSetup);
+router.delete('/:id', ctrl.deleteSetup);
 
 module.exports = router;

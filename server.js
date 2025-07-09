@@ -20,6 +20,7 @@ const pmcparameterRoutes = require("./routes/pmcParameterRoutes")
 const documentRoutes = require("./routes/documentRoutes")
 const skillMatrixRoutes = require("./routes/skillMatrixRoutes")
 const userRoutes = require("./routes/userRoutes")
+const toolRoutes = require("./routes/toolRoutes")
 
 
 app.use('/api/setups', setupRoutes);
@@ -32,6 +33,7 @@ app.use('/api/pmc-parameters', pmcparameterRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/skills', skillMatrixRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/tools', toolRoutes);
 
 
 const PORT = process.env.PORT || 5003;
