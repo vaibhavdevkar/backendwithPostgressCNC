@@ -21,6 +21,7 @@ const documentRoutes = require("./routes/documentRoutes")
 const skillMatrixRoutes = require("./routes/skillMatrixRoutes")
 const userRoutes = require("./routes/userRoutes")
 const toolRoutes = require("./routes/toolRoutes")
+const setupApprovalRoutes = require('./routes/setupApprovalRoutes');
 
 
 app.use('/api/setups', setupRoutes);
@@ -34,6 +35,7 @@ app.use('/api/documents', documentRoutes);
 app.use('/api/skills', skillMatrixRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tools', toolRoutes);
+app.use('/api/setup-approvals', setupApprovalRoutes);
 
 
 const PORT = process.env.PORT || 5003;

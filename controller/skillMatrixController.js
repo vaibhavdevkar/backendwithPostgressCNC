@@ -64,22 +64,36 @@ exports.createSkillMatrix = async (req, res) => {
 };
 
 // READ ALL
-exports.getAllSkills = async (_, res) => {
+// exports.getAllSkills = async (_, res) => {
+//   try {
+//     const { rows } = await pool.query(
+//       `SELECT sm.*,
+//               u.full_name      AS user_name,
+//               c.skill_name     AS skill_name,
+//               mm.machine_name  AS machine_name
+//        FROM skill_matrix sm
+//        JOIN user_master u      ON sm.user_id    = u.user_id
+//        JOIN skill_catalog c    ON sm.skill_id   = c.skill_id
+//        LEFT JOIN machine_master mm ON sm.machine_id = mm.machine_id
+//        ORDER BY sm.skill_matrix_id;`
+//     );
+//     res.json(rows);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Database error.' });
+//   }
+// };
+
+exports.getAllSkills = async (_req, res) => {
   try {
     const { rows } = await pool.query(
-      `SELECT sm.*,
-              u.full_name      AS user_name,
-              c.skill_name     AS skill_name,
-              mm.machine_name  AS machine_name
-       FROM skill_matrix sm
-       JOIN user_master u      ON sm.user_id    = u.user_id
-       JOIN skill_catalog c    ON sm.skill_id   = c.skill_id
-       LEFT JOIN machine_master mm ON sm.machine_id = mm.machine_id
-       ORDER BY sm.skill_matrix_id;`
+      `SELECT *
+       FROM skill_matrix
+       ORDER BY skill_matrix_id;`
     );
     res.json(rows);
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching skills:', err);
     res.status(500).json({ message: 'Database error.' });
   }
 };

@@ -2,10 +2,10 @@ const express = require('express');
 const router  = express.Router();
 const ctrl    = require('../controller/setupController');
 
-// router.get(
-//   '/parameters',
-//   ctrl.getParametersByPartAndMachine
-// );
+router.get(
+  '/parameters/:machine_id/:part_id',
+  ctrl.getSetupsByMachineAndPart
+);
 
 router.post('/',     ctrl.createSetup);
 router.get('/',     ctrl.getAllSetups);
