@@ -47,29 +47,62 @@
 // module.exports = router;
 
 
+// const express = require('express');
+// const multer  = require('multer');
+// const path    = require('path');
+// const router  = express.Router();
+// const toolController = require('../controller/toolController');
+
+// // Multer setup
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueName = Date.now() + '-' + Math.round(Math.random()*1E9);
+//     cb(null, uniqueName + path.extname(file.originalname));
+//   }
+// });
+// const upload = multer({ storage: storage });
+
+// // Routes with file upload middleware
+// router.post   ('/',     upload.single('tool_drawing_upload'), toolController.createTool);
+// router.get    ('/',     toolController.getAllTools);
+// router.get    ('/:id', toolController.getToolById);
+// router.put    ('/:id', upload.single('tool_drawing_upload'), toolController.updateTool);
+// router.delete ('/:id', toolController.deleteTool);
+
+// module.exports = router;
+
+
+// routes/toolRoutes.js
 const express = require('express');
-const multer  = require('multer');
-const path    = require('path');
-const router  = express.Router();
+const router = express.Router();
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
 const toolController = require('../controller/toolController');
 
-// Multer setup
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random()*1E9);
-    cb(null, uniqueName + path.extname(file.originalname));
+// Ensure upload directory exists
+const uploadDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+// Multer storage config
+ const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + unique + ext);
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Routes with file upload middleware
-router.post   ('/',     upload.single('tool_drawing_upload'), toolController.createTool);
-router.get    ('/',     toolController.getAllTools);
-router.get    ('/:id', toolController.getToolById);
-router.put    ('/:id', upload.single('tool_drawing_upload'), toolController.updateTool);
-router.delete ('/:id', toolController.deleteTool);
+// CRUD routes with file-upload middleware on create/update
+router.get('/', toolController.getAllTools);
+router.get('/:id', toolController.getToolById);
+router.post('/', upload.single('tool_drawing_upload'), toolController.createTool);
+router.put('/:id', upload.single('tool_drawing_upload'), toolController.updateTool);
+router.delete('/:id', toolController.deleteTool);
 
 module.exports = router;
