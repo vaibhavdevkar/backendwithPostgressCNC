@@ -22,6 +22,8 @@ const skillMatrixRoutes = require("./routes/skillMatrixRoutes")
 const userRoutes = require("./routes/userRoutes")
 const toolRoutes = require("./routes/toolRoutes")
 const setupApprovalRoutes = require('./routes/setupApprovalRoutes');
+const gaugeLogRoutes = require('./routes/gaugeLogRoutes');
+const processTxnRoutes = require('./routes/processTransactionRoutes');
 
 
 app.use('/api/setups', setupRoutes);
@@ -36,6 +38,8 @@ app.use('/api/skills', skillMatrixRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tools', toolRoutes);
 app.use('/api/setup-approvals', setupApprovalRoutes);
+app.use('/api/gauge', gaugeLogRoutes);
+app.use('/api/process-transactions', processTxnRoutes);
 
 
 const PORT = process.env.PORT || 5003;
